@@ -1,0 +1,143 @@
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">TRAZABILIDAD</p>
+    <h1>Historial de notificaciones</h1>
+    <p class="heading-subtitle">Cada fila es un canal de un destinatario. Filtra y revisa los errores de entrega.</p>
+  </div>
+  <button class="button button-secondary" type="button" (click)="load()">
+    <i class="pi pi-refresh" aria-hidden="true"></i>
+    Actualizar
+  </button>
+</div>
+
+<section class="panel">
+  <div class="filter-bar notify-filters">
+    <div class="filter-title">
+      <span class="panel-icon"><i class="pi pi-send" aria-hidden="true"></i></span>
+      <strong>Envíos</strong>
+      <span class="filter-count">{{ total() }}</span>
+    </div>
+    <div class="notify-filter-grid">
+      <label class="filter-field">
+        <span>Buscar</span>
+        <input [(ngModel)]="search" name="search" placeholder="Destinatario o título" maxlength="100" (keyup.enter)="applyFilters()" />
+      </label>
+      <label class="filter-field">
+        <span>Canal</span>
+        <select [(ngModel)]="channel" name="channel" (change)="applyFilters()">
+          @for (option of channelOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+      </label>
+      <label class="filter-field">
+        <span>Estado</span>
+        <select [(ngModel)]="status" name="status" (change)="applyFilters()">
+          @for (option of statusOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+      </label>
+      <label class="filter-field">
+        <span>Desde</span>
+        <input type="date" [(ngModel)]="from" name="from" (change)="applyFilters()" />
+      </label>
+      <label class="filter-field">
+        <span>Hasta</span>
+        <input type="date" [(ngModel)]="to" name="to" (change)="applyFilters()" />
+      </label>
+      <div class="notify-filter-actions">
+        <button class="button button-primary button-small" type="button" (click)="applyFilters()">
+          <i class="pi pi-search" aria-hidden="true"></i> Filtrar
+        </button>
+        <button class="button button-secondary button-small" type="button" (click)="resetFilters()">
+          Limpiar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <p-table
+    [value]="rows()"
+    [lazy]="true"
+    [paginator]="true"
+    [rows]="pageSize"
+    [totalRecords]="total()"
+    [first]="(page() - 1) * pageSize"
+    [loading]="loading()"
+    (onLazyLoad)="onLazyLoad($event)"
+    dataKey="id"
+    styleClass="notify-table"
+    [tableStyle]="{ 'min-width': '56rem' }"
+    [rowHover]="true"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">FECHA</th>
+        <th scope="col">DESTINATARIO</th>
+        <th scope="col">CANAL</th>
+        <th scope="col">TÍTULO</th>
+        <th scope="col">ESTADO</th>
+        <th scope="col">ACCIONES</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <td>{{ row.createdAt | date: "short" }}</td>
+        <td class="notify-destination">{{ row.destination }}</td>
+        <td>{{ channelLabel(row.channel) }}</td>
+        <td>{{ row.title }}</td>
+        <td>
+          <span class="notify-tag" [class]="'notify-tag notify-tag--' + row.status">
+            {{ statusLabel(row.status) }}
+          </span>
+        </td>
+        <td>
+          <button class="icon-button" type="button" title="Ver detalle" aria-label="Ver detalle" (click)="openDetail(row)">
+            <i class="pi pi-eye" aria-hidden="true"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">
+          <div class="empty-state">
+            <span class="empty-icon"><i class="pi pi-send" aria-hidden="true"></i></span>
+            <strong>Sin envíos</strong>
+            <p>No hay notificaciones que coincidan con los filtros.</p>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</section>
+
+<p-dialog
+  header="Detalle del envío"
+  [visible]="detailVisible()"
+  (visibleChange)="detailVisible.set($event)"
+  [modal]="true"
+  [style]="{ width: 'min(100%, 560px)' }"
+  [draggable]="false"
+>
+  @if (selected(); as item) {
+    <dl class="notify-detail">
+      <div><dt>Destinatario</dt><dd>{{ item.destination }}</dd></div>
+      <div><dt>Canal</dt><dd>{{ channelLabel(item.channel) }}</dd></div>
+      <div><dt>Estado</dt><dd>{{ statusLabel(item.status) }}</dd></div>
+      <div><dt>Título</dt><dd>{{ item.title }}</dd></div>
+      <div><dt>Mensaje</dt><dd>{{ item.body }}</dd></div>
+      <div><dt>ID del proveedor</dt><dd>{{ item.providerMessageId || "—" }}</dd></div>
+      <div><dt>Lote</dt><dd>{{ item.batchId || "—" }}</dd></div>
+      <div><dt>Creado</dt><dd>{{ item.createdAt | date: "medium" }}</dd></div>
+      <div><dt>Enviado</dt><dd>{{ item.sentAt ? (item.sentAt | date: "medium") : "—" }}</dd></div>
+      @if (item.error?.message) {
+        <div class="notify-detail-error">
+          <dt>Error</dt>
+          <dd><strong>{{ item.error?.code }}</strong>: {{ item.error?.message }}</dd>
+        </div>
+      }
+    </dl>
+  }
+</p-dialog>

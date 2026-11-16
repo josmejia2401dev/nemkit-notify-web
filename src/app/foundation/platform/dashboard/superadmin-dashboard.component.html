@@ -1,0 +1,105 @@
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">PLATAFORMA</p>
+    <h1>Resumen</h1>
+    <p class="heading-subtitle">Empresas, envíos y actividad de soporte en toda la plataforma.</p>
+  </div>
+  <button class="button button-secondary" type="button" (click)="load()">
+    <i class="pi pi-refresh" aria-hidden="true"></i>
+    Actualizar
+  </button>
+</div>
+
+@if (loading()) {
+  <div class="loading-panel" role="status">
+    <i class="pi pi-spin pi-spinner" aria-hidden="true"></i>
+    <span>Cargando resumen…</span>
+  </div>
+} @else if (data()) {
+  @if (data(); as overview) {
+  <section class="platform-overview-grid" aria-label="Indicadores de plataforma">
+    <a routerLink="/superadmin/companies" class="platform-overview-card">
+      <span class="platform-overview-icon"><i class="pi pi-building" aria-hidden="true"></i></span>
+      <strong>{{ overview.companies }}</strong>
+      <span>Empresas</span>
+    </a>
+    <a routerLink="/superadmin/users" class="platform-overview-card">
+      <span class="platform-overview-icon"><i class="pi pi-users" aria-hidden="true"></i></span>
+      <strong>{{ overview.users }}</strong>
+      <span>Cuentas de plataforma</span>
+    </a>
+    <a routerLink="/superadmin/dashboard" class="platform-overview-card">
+      <span class="platform-overview-icon"><i class="pi pi-send" aria-hidden="true"></i></span>
+      <strong>{{ overview.notifications.total }}</strong>
+      <span>Notificaciones procesadas</span>
+    </a>
+    <a routerLink="/superadmin/dashboard" class="platform-overview-card platform-overview-card--success">
+      <span class="platform-overview-icon"><i class="pi pi-check-circle" aria-hidden="true"></i></span>
+      <strong>{{ overview.notifications.sent }}</strong>
+      <span>Entregadas</span>
+    </a>
+    <a routerLink="/superadmin/dashboard" class="platform-overview-card platform-overview-card--warning">
+      <span class="platform-overview-icon"><i class="pi pi-times-circle" aria-hidden="true"></i></span>
+      <strong>{{ overview.notifications.failed }}</strong>
+      <span>Fallidas</span>
+    </a>
+    <a routerLink="/superadmin/dashboard" class="platform-overview-card platform-overview-card--muted">
+      <span class="platform-overview-icon"><i class="pi pi-clock" aria-hidden="true"></i></span>
+      <strong>{{ overview.notifications.queued }}</strong>
+      <span>En cola</span>
+    </a>
+    <a routerLink="/superadmin/dashboard" class="platform-overview-card">
+      <span class="platform-overview-icon"><i class="pi pi-percentage" aria-hidden="true"></i></span>
+      <strong>{{ overview.notifications.errorRate }}%</strong>
+      <span>Tasa de error</span>
+    </a>
+    <a routerLink="/superadmin/feedback-inbox" class="platform-overview-card platform-overview-card--warning">
+      <span class="platform-overview-icon"><i class="pi pi-inbox" aria-hidden="true"></i></span>
+      <strong>{{ overview.feedback.open }}</strong>
+      <span>Reportes abiertos</span>
+    </a>
+    <a routerLink="/superadmin/feedback-inbox" class="platform-overview-card">
+      <span class="platform-overview-icon"><i class="pi pi-flag" aria-hidden="true"></i></span>
+      <strong>{{ overview.feedback.total }}</strong>
+      <span>Reportes recibidos</span>
+    </a>
+  </section>
+
+  <section class="panel notify-chart-panel">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">MOTOR DE ENTREGAS</p>
+        <h2>Consumo por canal</h2>
+        <p>Estado global de las entregas de todas las empresas.</p>
+      </div>
+      <a class="button button-secondary button-small" routerLink="/superadmin/companies">
+        Ver empresas
+        <i class="pi pi-arrow-right" aria-hidden="true"></i>
+      </a>
+    </div>
+
+    <div class="notify-channel-grid">
+      @for (channel of channelList; track channel) {
+        <article class="notify-channel">
+          <div class="notify-channel-head">
+            <strong>{{ channelLabel(channel) }}</strong>
+            <span class="notify-channel-total">{{ overview.notifications.channels[channel].total }}</span>
+          </div>
+          <dl>
+            <div><dt>Entregadas</dt><dd>{{ overview.notifications.channels[channel].sent }}</dd></div>
+            <div><dt>Fallidas</dt><dd>{{ overview.notifications.channels[channel].failed }}</dd></div>
+            <div><dt>En cola</dt><dd>{{ overview.notifications.channels[channel].queued }}</dd></div>
+          </dl>
+        </article>
+      }
+    </div>
+  </section>
+  }
+} @else {
+  <div class="empty-state" role="alert">
+    <span class="empty-icon"><i class="pi pi-exclamation-circle" aria-hidden="true"></i></span>
+    <strong>No se pudo cargar el resumen</strong>
+    <p>Comprueba la conexión e inténtalo de nuevo.</p>
+    <button class="button button-primary button-small" type="button" (click)="load()">Intentar de nuevo</button>
+  </div>
+}

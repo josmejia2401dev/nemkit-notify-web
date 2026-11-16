@@ -1,0 +1,89 @@
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">TU CUENTA</p>
+    <h1>Configuración</h1>
+    <p class="heading-subtitle">Canales de entrega, notificaciones del navegador y datos de la cuenta.</p>
+  </div>
+</div>
+
+<app-plan-limit-banner label="notificaciones del mes" [plan]="planName()" [limit]="notificationLimit()" />
+
+<div class="notify-settings-grid">
+  <section class="panel notify-settings-panel">
+    <h2>Canales de entrega</h2>
+    <p>Disponibilidad configurada en el servidor para esta plataforma.</p>
+
+    <dl class="notify-channel-status">
+      @for (channel of channels; track channel.key) {
+        <div>
+          <dt>
+            <i [class]="channel.icon" aria-hidden="true"></i>
+            {{ channel.label }}
+          </dt>
+          <dd>
+            @if (isAvailable(channel.key)) {
+              <span class="notify-tag notify-tag--sent">Disponible</span>
+            } @else {
+              <span class="notify-tag notify-tag--queued">Sin configurar</span>
+            }
+          </dd>
+        </div>
+      }
+    </dl>
+  </section>
+
+  <section class="panel notify-settings-panel">
+    <h2>Cuenta</h2>
+    <p>Datos del usuario dueño de la cuenta.</p>
+
+    @if (user(); as account) {
+      <dl class="notify-detail">
+        <div><dt>Nombre</dt><dd>{{ account.fullName }}</dd></div>
+        <div><dt>Correo</dt><dd>{{ account.email }}</dd></div>
+        <div><dt>Plan</dt><dd>{{ planName() }}</dd></div>
+      </dl>
+    }
+
+    <div class="notify-quick-links">
+      <a class="button button-secondary button-small" routerLink="/company/profile">
+        <i class="pi pi-user-edit" aria-hidden="true"></i> Editar perfil
+      </a>
+    </div>
+  </section>
+
+  <section class="panel notify-settings-panel">
+    <h2>WebPush en este navegador</h2>
+    <p>Activa las notificaciones y obtén la suscripción del dispositivo para registrarla como suscriptor.</p>
+
+    <div class="notify-vapid">
+      <code>{{ publicKey() || "Sin clave pública VAPID" }}</code>
+      @if (publicKey()) {
+        <button class="icon-button" type="button" title="Copiar clave pública" aria-label="Copiar clave pública" (click)="copyPublicKey()">
+          <i class="pi pi-copy" aria-hidden="true"></i>
+        </button>
+      }
+    </div>
+
+    <div class="notify-quick-links">
+      <button class="button button-primary button-small" type="button" [disabled]="enabling() || !publicKey()" (click)="enableWebPush()">
+        <i class="pi pi-bell" aria-hidden="true"></i>
+        {{ enabling() ? "Activando…" : "Activar en este navegador" }}
+      </button>
+    </div>
+
+    @if (subscription()) {
+      <label class="notify-form" style="margin-top: 14px">
+        <span class="notify-muted">Suscripción del dispositivo (JSON)</span>
+        <textarea rows="7" readonly>{{ subscription() }}</textarea>
+      </label>
+      <div class="notify-quick-links">
+        <button class="button button-secondary button-small" type="button" (click)="copySubscription()">
+          <i class="pi pi-copy" aria-hidden="true"></i> Copiar suscripción
+        </button>
+        <button class="button button-secondary button-small" type="button" (click)="testNotification()">
+          <i class="pi pi-bell" aria-hidden="true"></i> Probar notificación
+        </button>
+      </div>
+    }
+  </section>
+</div>
