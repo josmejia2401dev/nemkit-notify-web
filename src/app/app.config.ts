@@ -1,6 +1,8 @@
 import {
   ApplicationConfig,
   LOCALE_ID,
+  inject,
+  provideAppInitializer,
   provideZoneChangeDetection,
 } from "@angular/core";
 import { registerLocaleData } from "@angular/common";
@@ -14,6 +16,8 @@ import { routes } from "./app.routes";
 import { authInterceptor } from "./core/interceptors/auth.interceptor";
 import { loadingInterceptor } from "./core/interceptors/loading.interceptor";
 import { errorInterceptor } from "./core/interceptors/error.interceptor";
+import { failoverInterceptor } from "./core/interceptors/failover.interceptor";
+import { BackendEndpointService } from "./core/services/backend-endpoint.service";
 
 registerLocaleData(localeEs, "es-CO");
 
@@ -22,9 +26,18 @@ export const appConfig: ApplicationConfig = {
     { provide: LOCALE_ID, useValue: "es-CO" },
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+    // El failover va al final para reintentar solo cuando los demás
+    // interceptores ya terminaron (y solo si el reintento también falla se
+    // muestra el toast de error).
     provideHttpClient(
-      withInterceptors([loadingInterceptor, authInterceptor, errorInterceptor]),
+      withInterceptors([
+        loadingInterceptor,
+        authInterceptor,
+        errorInterceptor,
+        failoverInterceptor,
+      ]),
     ),
+    provideAppInitializer(() => inject(BackendEndpointService).initialize()),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: { preset: Aura, options: { darkModeSelector: false } },

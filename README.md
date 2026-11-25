@@ -11,7 +11,7 @@ npm ci
 npm start
 ```
 
-La aplicación abre en `http://localhost:4300` y consume `http://localhost:4001/api/v1`.
+La aplicación abre en `http://localhost:4300` y consume `http://localhost:4001/api/v1/notify`.
 
 ## Producción
 
