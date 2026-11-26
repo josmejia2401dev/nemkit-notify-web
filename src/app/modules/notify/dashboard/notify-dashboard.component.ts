@@ -9,8 +9,6 @@ import { LimitsService } from "../../../core/services/limits.service";
 import { Channel, NotificationSummary, TimePoint } from "../../../core/models/notify.models";
 import { PlanLimitBannerComponent } from "../../../shared/components/plan-limit-banner/plan-limit-banner.component";
 
-type ChannelFilter = Channel | "all";
-
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 @Component({
@@ -34,9 +32,8 @@ export class NotifyDashboardComponent implements OnInit {
   readonly summary = signal<NotificationSummary | null>(null);
   readonly loading = signal(true);
   readonly days = signal(30);
-  readonly channel = signal<ChannelFilter>("all");
 
-  readonly channelList: Channel[] = ["email", "sms", "webpush"];
+  readonly channelList: Channel[] = ["email"];
 
   readonly dayOptions = [
     { label: "7 días", value: 7 },
@@ -44,12 +41,6 @@ export class NotifyDashboardComponent implements OnInit {
     { label: "90 días", value: 90 },
   ];
 
-  readonly channelOptions = [
-    { label: "Todos", value: "all" },
-    { label: "Email", value: "email" },
-    { label: "SMS", value: "sms" },
-    { label: "WebPush", value: "webpush" },
-  ];
 
   private series = signal<TimePoint[]>([]);
 
@@ -58,7 +49,6 @@ export class NotifyDashboardComponent implements OnInit {
   readonly planName = computed(() => this.usage()?.plan.name ?? "Gratuito");
 
   readonly chartData = computed(() => {
-    const channel = this.channel();
     const days = this.days();
     const buckets = new Map<string, { sent: number; failed: number }>();
 
@@ -67,7 +57,6 @@ export class NotifyDashboardComponent implements OnInit {
     }
 
     for (const point of this.series()) {
-      if (channel !== "all" && point.channel !== channel) continue;
       const bucket = buckets.get(point.day);
       if (!bucket) continue;
       if (point.status === "sent") bucket.sent += point.count;
@@ -146,12 +135,8 @@ export class NotifyDashboardComponent implements OnInit {
     this.loadSeries();
   }
 
-  changeChannel(channel: ChannelFilter): void {
-    this.channel.set(channel);
-  }
-
   channelLabel(channel: Channel): string {
-    return { email: "Email", sms: "SMS", webpush: "WebPush" }[channel];
+    return { email: "Email" }[channel];
   }
 
   private dayKey(date: Date): string {

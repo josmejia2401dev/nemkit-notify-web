@@ -6,6 +6,8 @@ import { DialogModule } from "primeng/dialog";
 import { NotifyService } from "../services/notify.service";
 import { Channel, DeliveryStatus, NotificationRecord } from "../../../core/models/notify.models";
 
+const CHANNEL_LABELS: Record<Channel, string> = { email: "Email" };
+
 const PAGE_SIZE = 10;
 
 @Component({
@@ -32,12 +34,7 @@ export class NotificationHistoryComponent implements OnInit {
   to = "";
   search = "";
 
-  readonly channelOptions = [
-    { label: "Todos los canales", value: "" },
-    { label: "Email", value: "email" },
-    { label: "SMS", value: "sms" },
-    { label: "WebPush", value: "webpush" },
-  ];
+  readonly channelOptions = [{ label: "Email", value: "email" }];
 
   readonly statusOptions = [
     { label: "Todos los estados", value: "" },
@@ -98,7 +95,7 @@ export class NotificationHistoryComponent implements OnInit {
   }
 
   channelLabel(channel: Channel): string {
-    return { email: "Email", sms: "SMS", webpush: "WebPush" }[channel];
+    return CHANNEL_LABELS[channel] ?? channel;
   }
 
   statusLabel(status: DeliveryStatus): string {

@@ -20,7 +20,7 @@
       <span class="filter-count">{{ total() }}</span>
     </div>
     <div class="feedback-filters">
-      <input [(ngModel)]="search" name="search" placeholder="ID externo, correo o teléfono" aria-label="Buscar suscriptores" maxlength="100" (keyup.enter)="load()" />
+      <input [(ngModel)]="search" name="search" placeholder="ID externo o correo" aria-label="Buscar suscriptores" maxlength="100" (keyup.enter)="load()" />
       <button class="button button-secondary button-small" type="button" (click)="load()">
         <i class="pi pi-search" aria-hidden="true"></i> Buscar
       </button>
@@ -39,7 +39,6 @@
           <tr>
             <th scope="col">ID EXTERNO</th>
             <th scope="col">CORREO</th>
-            <th scope="col">TELÉFONO</th>
             <th scope="col">TEMAS</th>
             <th scope="col">ACCIONES</th>
           </tr>
@@ -47,16 +46,10 @@
         <tbody>
           @for (subscriber of rows(); track subscriber.id) {
             <tr>
-              <td data-label="ID externo">
-                <strong>{{ subscriber.externalId }}</strong>
-                @if (subscriber.webpush?.length) {
-                  <i class="pi pi-bell notify-muted" title="WebPush registrado" aria-label="WebPush registrado"></i>
-                }
-              </td>
-              <td data-label="Correo">{{ subscriber.email || "—" }}</td>
-              <td data-label="Teléfono">{{ subscriber.phone || "—" }}</td>
+              <td data-label="ID externo"><strong>{{ subscriber.externalId }}</strong></td>
+              <td data-label="Correo">{{ subscriber.email }}</td>
               <td data-label="Temas">
-                @if (subscriber.topicIds?.length) {
+                @if (subscriber.topicIds.length) {
                   <div class="notify-chips">
                     @for (topicId of subscriber.topicIds; track topicId) {
                       <span class="notify-chip">{{ topicLabel(topicId) }}</span>
@@ -106,26 +99,11 @@
     </label>
     <label class="form-field">
       <span>Correo electrónico</span>
-      <input type="email" [(ngModel)]="form.email" name="email" maxlength="254" />
-    </label>
-    <label class="form-field">
-      <span>Teléfono</span>
-      <input [(ngModel)]="form.phone" name="phone" maxlength="20" placeholder="+573001234567" />
+      <input type="email" [(ngModel)]="form.email" name="email" required maxlength="254" />
     </label>
     <label class="form-field">
       <span>Idioma</span>
       <input [(ngModel)]="form.locale" name="locale" maxlength="10" placeholder="es" />
-    </label>
-
-    <label class="form-field">
-      <span>Suscripción WebPush (JSON, opcional)</span>
-      <textarea
-        rows="5"
-        [(ngModel)]="form.webpush"
-        name="webpush"
-        placeholder='{"endpoint":"https://…","keys":{"p256dh":"…","auth":"…"}}'
-      ></textarea>
-      <small class="notify-muted">Pégala desde Configuración → “Activar en este navegador”.</small>
     </label>
 
     <fieldset class="notify-topics-field">
@@ -150,7 +128,7 @@
 
     <div class="notify-form-actions">
       <button class="button button-secondary" type="button" (click)="dialogVisible.set(false)">Cancelar</button>
-      <button class="button button-primary" type="submit" [disabled]="saving() || !form.externalId.trim()">
+      <button class="button button-primary" type="submit" [disabled]="saving() || !form.externalId.trim() || !form.email.trim()">
         {{ saving() ? "Guardando…" : "Guardar" }}
       </button>
     </div>

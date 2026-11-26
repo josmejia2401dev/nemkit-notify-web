@@ -1,4 +1,4 @@
-export type Channel = "email" | "sms" | "webpush";
+export type Channel = "email";
 export type DeliveryStatus = "queued" | "sent" | "failed";
 export type CompanyStatus = "active" | "inactive" | "archived";
 
@@ -57,19 +57,12 @@ export interface Topic {
   createdAt: string;
 }
 
-export interface WebPushSubscription {
-  endpoint: string;
-  keys: { p256dh: string; auth: string };
-}
-
 export interface Subscriber {
   id: number;
   externalId: string;
   email: string;
-  phone: string;
   locale: string;
   attributes: Record<string, unknown>;
-  webpush: WebPushSubscription[];
   topicIds: number[];
   createdAt: string;
 }

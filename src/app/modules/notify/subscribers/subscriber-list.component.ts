@@ -6,7 +6,7 @@ import { NotifyService } from "../services/notify.service";
 import { LimitsService } from "../../../core/services/limits.service";
 import { ConfirmService } from "../../../core/services/confirm.service";
 import { NotificationService } from "../../../core/services/notification.service";
-import { Subscriber, Topic, WebPushSubscription } from "../../../core/models/notify.models";
+import { Subscriber, Topic } from "../../../core/models/notify.models";
 import { DEFAULT_PAGE_SIZE, PaginationComponent } from "../../../shared/components/pagination/pagination.component";
 import { PlanLimitBannerComponent } from "../../../shared/components/plan-limit-banner/plan-limit-banner.component";
 
@@ -14,9 +14,7 @@ interface SubscriberForm {
   id: number | null;
   externalId: string;
   email: string;
-  phone: string;
   locale: string;
-  webpush: string;
   topicIds: number[];
 }
 
@@ -24,9 +22,7 @@ const EMPTY_FORM: SubscriberForm = {
   id: null,
   externalId: "",
   email: "",
-  phone: "",
   locale: "es",
-  webpush: "",
   topicIds: [],
 };
 
@@ -102,7 +98,7 @@ export class SubscriberListComponent implements OnInit {
   }
 
   openCreate(): void {
-    this.form = { ...EMPTY_FORM, topicIds: [], webpush: "" };
+    this.form = { ...EMPTY_FORM, topicIds: [] };
     this.dialogVisible.set(true);
   }
 
@@ -111,11 +107,7 @@ export class SubscriberListComponent implements OnInit {
       id: subscriber.id,
       externalId: subscriber.externalId,
       email: subscriber.email ?? "",
-      phone: subscriber.phone ?? "",
       locale: subscriber.locale ?? "es",
-      webpush: subscriber.webpush?.length
-        ? JSON.stringify(subscriber.webpush, null, 2)
-        : "",
       topicIds: [...(subscriber.topicIds ?? [])],
     };
     this.dialogVisible.set(true);
@@ -135,46 +127,17 @@ export class SubscriberListComponent implements OnInit {
   save(): void {
     if (!this.form.externalId.trim()) return;
 
-    const webpush = this.readWebpush();
-    if (webpush === "invalid") {
-      this.toasts.warn("WebPush inválido", "Revisa el JSON de la suscripción del dispositivo.");
-      return;
-    }
-
     this.saving.set(true);
     const payload = {
       externalId: this.form.externalId.trim(),
       email: this.form.email.trim(),
-      phone: this.form.phone.trim(),
       locale: this.form.locale.trim() || "es",
-      webpush,
     };
 
     if (this.form.id) {
       this.update(payload, this.form.id);
     } else {
       this.create(payload);
-    }
-  }
-
-  /** Lee el textarea WebPush y devuelve el arreglo o el marcador "invalid". */
-  private readWebpush(): WebPushSubscription[] | "invalid" {
-    const raw = this.form.webpush.trim();
-    if (!raw) return [];
-
-    try {
-      const parsed = JSON.parse(raw);
-      const list = Array.isArray(parsed) ? parsed : [parsed];
-      const valid = list.length > 0 && list.every((item) =>
-        item
-        && typeof item.endpoint === "string"
-        && item.endpoint.trim()
-        && item.keys
-        && typeof item.keys.p256dh === "string"
-        && typeof item.keys.auth === "string");
-      return valid ? (list as WebPushSubscription[]) : "invalid";
-    } catch {
-      return "invalid";
     }
   }
 

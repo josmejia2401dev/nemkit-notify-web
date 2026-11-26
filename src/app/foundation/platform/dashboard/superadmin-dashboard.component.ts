@@ -18,7 +18,7 @@ export class SuperadminDashboardComponent implements OnInit {
   data = signal<PlatformOverview | null>(null);
   loading = signal(true);
 
-  readonly channelList: Channel[] = ["email", "sms", "webpush"];
+  readonly channelList: Channel[] = ["email"];
 
   ngOnInit(): void {
     this.load();
@@ -36,6 +36,6 @@ export class SuperadminDashboardComponent implements OnInit {
   }
 
   channelLabel(channel: Channel): string {
-    return { email: "Email", sms: "SMS", webpush: "WebPush" }[channel];
+    return { email: "Email" }[channel];
   }
 }

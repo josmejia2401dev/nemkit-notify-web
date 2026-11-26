@@ -31,7 +31,7 @@ export class SuperadminCompanyDetailComponent implements OnInit {
   loading = signal(true);
   saving = signal(false);
 
-  readonly channelList: Channel[] = ["email", "sms", "webpush"];
+  readonly channelList: Channel[] = ["email"];
 
   private get companyId(): number {
     return Number(this.route.snapshot.paramMap.get("id"));
@@ -71,7 +71,7 @@ export class SuperadminCompanyDetailComponent implements OnInit {
   }
 
   channelLabel(channel: Channel): string {
-    return { email: "Email", sms: "SMS", webpush: "WebPush" }[channel];
+    return { email: "Email" }[channel];
   }
 
   async changeStatus(status: CompanyStatus): Promise<void> {

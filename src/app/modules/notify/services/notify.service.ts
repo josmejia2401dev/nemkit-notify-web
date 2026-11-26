@@ -97,9 +97,6 @@ export class NotifyService {
     return this.api.get<TimePoint[]>("/company/stats/timeseries", { days });
   }
 
-  webpushPublicKey(): Observable<ApiResponse<{ publicKey: string }>> {
-    return this.api.get<{ publicKey: string }>("/company/webpush/public-key");
-  }
 
   channels(): Observable<ApiResponse<Record<Channel, boolean>>> {
     return this.api.get<Record<Channel, boolean>>("/company/stats/channels");

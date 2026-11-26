@@ -2,7 +2,7 @@
   <div>
     <p class="eyebrow">TU EMPRESA</p>
     <h1>Resumen</h1>
-    <p class="heading-subtitle">Envíos de los últimos 30 días por canal, estado y tasa de error.</p>
+    <p class="heading-subtitle">Envíos de los últimos 30 días por estado y tasa de error.</p>
   </div>
   <button class="button button-secondary" type="button" (click)="loadSummary()">
     <i class="pi pi-refresh" aria-hidden="true"></i>
@@ -50,7 +50,7 @@
       <div>
         <p class="eyebrow">ACTIVIDAD</p>
         <h2>Envíos exitosos vs fallidos</h2>
-        <p>Segmenta por canal y ajusta la ventana de tiempo.</p>
+        <p>Ajusta la ventana de tiempo del historial de email.</p>
       </div>
       <div class="notify-chart-controls">
         <p-selectbutton
@@ -62,15 +62,6 @@
           [allowEmpty]="false"
           aria-label="Ventana de tiempo"
         />
-        <p-selectbutton
-          [options]="channelOptions"
-          [ngModel]="channel()"
-          (ngModelChange)="changeChannel($event)"
-          optionLabel="label"
-          optionValue="value"
-          [allowEmpty]="false"
-          aria-label="Canal"
-        />
       </div>
     </div>
     <div class="notify-chart">
@@ -78,7 +69,7 @@
     </div>
   </section>
 
-  <section class="notify-channel-grid" aria-label="Detalle por canal">
+  <section class="notify-channel-grid" aria-label="Detalle de entregas">
     @for (key of channelList; track key) {
       <article class="panel notify-channel">
         <div class="notify-channel-head">

@@ -417,27 +417,6 @@
   font-size: 11px;
 }
 
-.notify-vapid {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
-  border: 1px dashed rgba(30, 42, 36, 0.40);
-  border-radius: 9px;
-  background: #0D1310;
-}
-
-.notify-vapid code {
-  min-width: 0;
-  flex: 1;
-  overflow: hidden;
-  color: #DCE5DF;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 10px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .notify-channel-status {
   display: grid;
   gap: 9px;
