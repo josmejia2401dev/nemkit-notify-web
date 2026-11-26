@@ -80,13 +80,13 @@ export class NotifyDashboardComponent implements OnInit {
         {
           label: "Enviados",
           data: [...buckets.values()].map((value) => value.sent),
-          backgroundColor: "#2f7d5b",
+          backgroundColor: "#3B7FEA",
           borderRadius: 4,
         },
         {
           label: "Fallidos",
           data: [...buckets.values()].map((value) => value.failed),
-          backgroundColor: "#c0564b",
+          backgroundColor: "#F08A7E",
           borderRadius: 4,
         },
       ],
@@ -96,10 +96,24 @@ export class NotifyDashboardComponent implements OnInit {
   readonly chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    plugins: { legend: { position: "bottom" } },
+    plugins: {
+      legend: {
+        position: "bottom",
+        labels: { color: "#A6B3AB", boxWidth: 12, boxHeight: 12 },
+      },
+    },
     scales: {
-      x: { stacked: true, grid: { display: false } },
-      y: { stacked: true, beginAtZero: true, ticks: { precision: 0 } },
+      x: {
+        stacked: true,
+        grid: { display: false },
+        ticks: { color: "#7D8A82" },
+      },
+      y: {
+        stacked: true,
+        beginAtZero: true,
+        ticks: { color: "#7D8A82", precision: 0 },
+        grid: { color: "rgba(30, 42, 36, .55)" },
+      },
     },
   };
 

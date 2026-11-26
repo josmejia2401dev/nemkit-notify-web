@@ -2,7 +2,7 @@
 @import "primeicons/primeicons.css";
 
 /* ═══════════════════════════════════════════════════
-   NEMKIT INVENTORY — entrada de estilos
+   NEMKIT NOTIFY — entrada de estilos
    Las capas se importan en el mismo orden en que se
    definieron originalmente para no alterar la cascada.
    ═══════════════════════════════════════════════════ */
@@ -20,7 +20,7 @@
 @import "./styles/responsive/deploy.css";
 
 /* Tema base (design system heredado) */
-@import "./styles/themes/inventory.css";
+@import "./styles/themes/notify.css";
 @import "./styles/base/inventory.css";
 
 /* Shell de la aplicación */
