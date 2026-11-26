@@ -479,3 +479,58 @@
   .notify-chart { height: 230px; }
   .notify-detail div { grid-template-columns: minmax(0, 1fr); gap: 3px; }
 }
+
+/* ── Documentación del API de email ──────────────────────────────── */
+.notify-api-doc { margin-top: 15px; }
+.notify-api-doc .panel-heading { align-items: flex-start; }
+.notify-api-doc .panel-heading h2 { margin: 0; color: var(--deploy-text); font-size: 16px; font-weight: 650; letter-spacing: -0.4px; }
+.notify-api-doc .panel-heading p:not(.eyebrow) { max-width: 620px; margin: 5px 0 0; color: var(--deploy-text-secondary); font-size: 11px; line-height: 1.55; }
+.notify-api-doc-body { padding: 0 21px 20px; }
+.notify-api-doc-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 14px; color: var(--deploy-text-muted); font-size: 9px; }
+.notify-api-doc-meta code {
+  color: var(--deploy-accent);
+  font-family: var(--font-mono);
+  font-size: 9px;
+}
+.notify-code-block {
+  position: relative;
+  margin-top: 11px;
+  padding: 13px 14px;
+  border: 1px solid var(--deploy-border);
+  border-radius: 10px;
+  background: #0A0F0C;
+}
+.notify-code-block .button { position: absolute; top: 9px; right: 9px; }
+.notify-code-block pre { margin: 0; padding-top: 30px; overflow-x: auto; }
+.notify-code-block code {
+  color: #DCE5DF;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  line-height: 1.65;
+  white-space: pre;
+}
+.notify-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 12px;
+  padding: 11px 13px;
+  border: 1px solid rgba(242, 196, 107, .30);
+  border-radius: 9px;
+  color: #F2C46B;
+  background: rgba(245, 158, 11, .10);
+  font-size: 10px;
+}
+.notify-alert > i { margin-top: 1px; }
+.notify-alert strong { display: block; margin-bottom: 2px; font-size: 11px; }
+.notify-alert p { margin: 0; color: #DCE5DF; line-height: 1.55; }
+.notify-alert code { color: var(--deploy-accent); font-family: var(--font-mono); font-size: 9px; }
+
+@media (max-width: 760px) {
+  .notify-api-doc-body { padding: 0 14px 16px; }
+  .notify-api-doc-meta { flex-direction: column; align-items: flex-start; }
+  .notify-code-block pre { font-size: 8.5px; }
+}
+
+.notify-spam-note { display: flex; align-items: center; gap: 6px; margin-top: 6px; color: #F2C46B; font-size: 10px; }
+.notify-detail-spam dd { color: #F2C46B; }

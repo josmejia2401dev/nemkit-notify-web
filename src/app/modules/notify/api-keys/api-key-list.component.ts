@@ -41,6 +41,19 @@ export class ApiKeyListComponent implements OnInit {
   name = "";
   search = "";
 
+  readonly emailExample = `curl -X POST https://TU-API/api/v1/notify/notifications/email \
+  -H "api-key: nk_live_..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "cliente@example.com",
+    "toName": "Cliente",
+    "subject": "Tu código de verificación es 482910",
+    "text": "Tu código OTP es: 482910. Expira en 5 minutos.",
+    "html": "<h3>Tu código de verificación</h3><p>Usa este código: <strong>482910</strong></p>"
+  }'`;
+
+
+
   readonly usage = this.limitsService.usage;
   readonly apiKeyLimit = computed(() => this.usage()?.limits["apiKeys"] ?? null);
   readonly planName = computed(() => this.usage()?.plan.name ?? "Gratuito");
@@ -107,6 +120,16 @@ export class ApiKeyListComponent implements OnInit {
   displayKey(record: ApiKeyRecord): string {
     if (this.isRevealed(record.id)) return record.key;
     return `${record.key.slice(0, 12)}••••••${record.key.slice(-4)}`;
+  }
+
+
+  async copyEmailExample(): Promise<void> {
+    try {
+      await navigator.clipboard.writeText(this.emailExample);
+      this.toasts.success("Ejemplo copiado", "Reemplaza la URL y la API key antes de usarlo.");
+    } catch {
+      this.toasts.warn("No se pudo copiar", "Selecciona el ejemplo manualmente.");
+    }
   }
 
   async copy(record: ApiKeyRecord): Promise<void> {

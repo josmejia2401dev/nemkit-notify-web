@@ -3,6 +3,7 @@
     <p class="eyebrow">TRAZABILIDAD</p>
     <h1>Historial de notificaciones</h1>
     <p class="heading-subtitle">Cada fila es un canal de un destinatario. Filtra y revisa los errores de entrega.</p>
+    <p class="notify-muted notify-spam-note"><i class="pi pi-info-circle" aria-hidden="true"></i> Los correos pueden llegar a spam. Pide al destinatario revisar spam y marcar el remitente como seguro.</p>
   </div>
   <button class="button button-secondary" type="button" (click)="load()">
     <i class="pi pi-refresh" aria-hidden="true"></i>
@@ -128,6 +129,7 @@
       <div><dt>Estado</dt><dd>{{ statusLabel(item.status) }}</dd></div>
       <div><dt>Título</dt><dd>{{ item.title }}</dd></div>
       <div><dt>Mensaje</dt><dd>{{ item.body }}</dd></div>
+      <div><dt>Proveedor</dt><dd>{{ item.provider || "—" }}</dd></div>
       <div><dt>ID del proveedor</dt><dd>{{ item.providerMessageId || "—" }}</dd></div>
       <div><dt>Lote</dt><dd>{{ item.batchId || "—" }}</dd></div>
       <div><dt>Creado</dt><dd>{{ item.createdAt | date: "medium" }}</dd></div>
@@ -136,6 +138,12 @@
         <div class="notify-detail-error">
           <dt>Error</dt>
           <dd><strong>{{ item.error?.code }}</strong>: {{ item.error?.message }}</dd>
+        </div>
+      }
+      @if (item.channel === "email") {
+        <div class="notify-detail-spam">
+          <dt>Nota</dt>
+          <dd>El correo puede llegar a spam. Pide al destinatario revisar la carpeta de spam.</dd>
         </div>
       }
     </dl>

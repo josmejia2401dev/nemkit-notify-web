@@ -79,6 +79,38 @@
   }
 </section>
 
+
+<section class="panel notify-api-doc">
+  <div class="panel-heading">
+    <div>
+      <p class="eyebrow">API PÚBLICA · EMAIL</p>
+      <h2>Enviar un correo sin plantillas</h2>
+      <p>El cliente envía el asunto, el texto y el HTML final. No hay plantillas ni variables.</p>
+    </div>
+    <span class="notify-tag notify-tag--sent">POST</span>
+  </div>
+  <div class="notify-api-doc-body">
+    <div class="notify-api-doc-meta">
+      <code>POST /api/v1/notify/notifications/email</code>
+      <span>Header <code>api-key</code></span>
+      <span>Plan free: 1.000 correos/mes</span>
+    </div>
+    <div class="notify-code-block">
+      <button type="button" class="button button-secondary button-small" (click)="copyEmailExample()">
+        <i class="pi pi-copy" aria-hidden="true"></i> Copiar ejemplo
+      </button>
+      <pre><code>{{ emailExample }}</code></pre>
+    </div>
+    <div class="notify-alert">
+      <i class="pi pi-exclamation-triangle" aria-hidden="true"></i>
+      <div>
+        <strong>El correo puede llegar a spam.</strong>
+        <p>Pide al destinatario revisar la carpeta de spam y marcar el remitente como seguro. La respuesta del API incluye <code>spamWarning</code> y el uso del plan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <p-dialog
   header="Nueva API key"
   [visible]="dialogVisible()"

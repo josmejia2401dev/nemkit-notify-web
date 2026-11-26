@@ -33,7 +33,7 @@ export interface DeliveryError {
 export interface NotificationRecord {
   id: number;
   channel: Channel;
-  subscriberId: number;
+  subscriberId?: number | null;
   topicId: number | null;
   batchId: string | null;
   destination: string;
@@ -42,6 +42,7 @@ export interface NotificationRecord {
   data: Record<string, unknown>;
   status: DeliveryStatus;
   error?: DeliveryError;
+  provider?: string | null;
   providerMessageId: string | null;
   sentAt: string | null;
   createdAt: string;
