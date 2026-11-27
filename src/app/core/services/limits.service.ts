@@ -2,7 +2,7 @@ import { Injectable, inject, signal } from "@angular/core";
 import { Observable, map, of, tap } from "rxjs";
 import { ApiService } from "./api.service";
 
-export type LimitKey = "topics" | "subscribers" | "apiKeys" | "notifications";
+export type LimitKey = "apiKeys" | "notifications";
 export type LimitPeriod = "total" | "month";
 
 export interface LimitStatus {
@@ -46,7 +46,7 @@ export class LimitsService {
     const cached = this.usage();
     if (cached && !force) return of(cached);
 
-    return this.api.get<LimitUsage>("/limits").pipe(
+    return this.api.get<LimitUsage>("/foundation/limits").pipe(
       map((response) => response.data),
       tap((usage) => this.usage.set(usage)),
     );
@@ -57,7 +57,7 @@ export class LimitsService {
     const cached = this.plans();
     if (cached.length && !force) return of(cached);
 
-    return this.api.get<PlanCatalogEntry[]>("/limits/plans").pipe(
+    return this.api.get<PlanCatalogEntry[]>("/foundation/limits/plans").pipe(
       map((response) => response.data ?? []),
       tap((plans) => this.plans.set(plans)),
     );

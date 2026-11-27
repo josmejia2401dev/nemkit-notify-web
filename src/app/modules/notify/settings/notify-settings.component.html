@@ -23,7 +23,7 @@
           @if (emailAvailable() === true) {
             <span class="notify-tag notify-tag--sent">Disponible</span>
           } @else if (emailAvailable() === false) {
-            <span class="notify-tag notify-tag--queued">Sin configurar</span>
+            <span class="notify-tag notify-tag--failed">Sin configurar</span>
           } @else {
             <span class="notify-tag">Consultando…</span>
           }

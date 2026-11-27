@@ -24,14 +24,6 @@
         <input [(ngModel)]="search" name="search" placeholder="Destinatario o título" maxlength="100" (keyup.enter)="applyFilters()" />
       </label>
       <label class="filter-field">
-        <span>Canal</span>
-        <select [(ngModel)]="channel" name="channel" (change)="applyFilters()">
-          @for (option of channelOptions; track option.value) {
-            <option [value]="option.value">{{ option.label }}</option>
-          }
-        </select>
-      </label>
-      <label class="filter-field">
         <span>Estado</span>
         <select [(ngModel)]="status" name="status" (change)="applyFilters()">
           @for (option of statusOptions; track option.value) {
@@ -131,7 +123,6 @@
       <div><dt>Mensaje</dt><dd>{{ item.body }}</dd></div>
       <div><dt>Proveedor</dt><dd>{{ item.provider || "—" }}</dd></div>
       <div><dt>ID del proveedor</dt><dd>{{ item.providerMessageId || "—" }}</dd></div>
-      <div><dt>Lote</dt><dd>{{ item.batchId || "—" }}</dd></div>
       <div><dt>Creado</dt><dd>{{ item.createdAt | date: "medium" }}</dd></div>
       <div><dt>Enviado</dt><dd>{{ item.sentAt ? (item.sentAt | date: "medium") : "—" }}</dd></div>
       @if (item.error?.message) {

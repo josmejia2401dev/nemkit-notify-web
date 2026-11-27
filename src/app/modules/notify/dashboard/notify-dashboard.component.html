@@ -33,11 +33,6 @@
       <strong>{{ stats.failed }}</strong>
       <span>Fallidos</span>
     </article>
-    <article class="panel notify-stat notify-stat--warning">
-      <span class="notify-stat-icon"><i class="pi pi-clock" aria-hidden="true"></i></span>
-      <strong>{{ stats.queued }}</strong>
-      <span>En cola</span>
-    </article>
     <article class="panel notify-stat">
       <span class="notify-stat-icon"><i class="pi pi-percentage" aria-hidden="true"></i></span>
       <strong>{{ stats.errorRate }}%</strong>
@@ -79,7 +74,6 @@
         <dl>
           <div><dt>Entregados</dt><dd>{{ stats.channels[key].sent }}</dd></div>
           <div><dt>Fallidos</dt><dd>{{ stats.channels[key].failed }}</dd></div>
-          <div><dt>En cola</dt><dd>{{ stats.channels[key].queued }}</dd></div>
         </dl>
       </article>
     }
@@ -94,9 +88,6 @@
   <div class="notify-quick-links">
     <a class="button button-secondary" routerLink="/company/notifications">
       <i class="pi pi-list" aria-hidden="true"></i> Ver historial
-    </a>
-    <a class="button button-secondary" routerLink="/company/subscribers">
-      <i class="pi pi-users" aria-hidden="true"></i> Suscriptores
     </a>
     <a class="button button-secondary" routerLink="/company/api-keys">
       <i class="pi pi-key" aria-hidden="true"></i> API Keys

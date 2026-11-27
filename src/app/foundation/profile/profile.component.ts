@@ -42,8 +42,6 @@ export class ProfileComponent implements OnInit {
   readonly limits = inject(LimitsService);
 
   readonly limitLabels: Record<string, string> = {
-    topics: "Temas",
-    subscribers: "Suscriptores",
     apiKeys: "API keys",
     notifications: "Notificaciones",
   };
@@ -57,7 +55,7 @@ export class ProfileComponent implements OnInit {
 
   /** Base del endpoint de perfil según el tipo de sesión (empresa o empleado). */
   private get base(): string {
-    return this.authStore.sessionType() === "employee" ? "/employees/profile" : "/users/profile";
+    return this.authStore.sessionType() === "employee" ? "/foundation/employees/profile" : "/foundation/users/profile";
   }
 
   editName = "";
@@ -194,7 +192,7 @@ export class ProfileComponent implements OnInit {
     }
 
     this.savingBusinessProfile.set(true);
-    this.api.put<Pick<UserProfile, "companyName">>("/users/profile", changes).subscribe({
+    this.api.put<Pick<UserProfile, "companyName">>("/foundation/users/profile", changes).subscribe({
       next: (response) => {
         const currentProfile = this.profile();
         if (currentProfile) this.profile.set({ ...currentProfile, ...response.data });

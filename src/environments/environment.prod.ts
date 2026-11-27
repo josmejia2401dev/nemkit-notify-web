@@ -11,7 +11,7 @@ const HOME_API_ORIGIN = "https://gateway.tail224652.ts.net";
  * su origen (por ejemplo `https://nemkit-notify-api.onrender.com`) y quedará
  * como nodo de respaldo sin tocar el resto de la configuración.
  */
-const RENDER_ORIGIN = "";
+const RENDER_ORIGIN = "https://nemkit-notify-api.onrender.com";
 
 /** Prefijo propio del MS de notificaciones detrás del gateway Tailscale. */
 const API_PREFIX = "/api/v1/notify";

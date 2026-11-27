@@ -4,7 +4,7 @@ import { roleGuard } from "../../../core/guards/role.guard";
 import { foundationProfileRoutes } from "../../../foundation/profile/profile.routes";
 import { foundationFeedbackRoutes } from "../../../foundation/feedback/feedback.routes";
 
-/** Portal de la empresa: autogestión de temas, suscriptores, envíos y API Keys. */
+/** Portal de la empresa: historial, API Keys, estadísticas y ajustes. */
 export const companyRoutes: Routes = [
   {
     path: "company",
@@ -24,20 +24,6 @@ export const companyRoutes: Routes = [
         loadComponent: () =>
           import("../../notify/notifications/notification-history.component").then(
             (m) => m.NotificationHistoryComponent,
-          ),
-      },
-      {
-        path: "topics",
-        loadComponent: () =>
-          import("../../notify/topics/topic-list.component").then(
-            (m) => m.TopicListComponent,
-          ),
-      },
-      {
-        path: "subscribers",
-        loadComponent: () =>
-          import("../../notify/subscribers/subscriber-list.component").then(
-            (m) => m.SubscriberListComponent,
           ),
       },
       {

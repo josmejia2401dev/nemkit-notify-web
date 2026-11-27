@@ -38,7 +38,7 @@ export class RegisterComponent {
     this.error.set(null);
     this.loading.set(true);
     this.api
-      .post<any>("/auth/users/register", {
+      .post<any>("/foundation/auth/users/register", {
         fullName: this.fullName,
         companyName: this.companyName,
         email: this.email,

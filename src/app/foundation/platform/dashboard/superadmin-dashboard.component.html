@@ -43,11 +43,6 @@
       <strong>{{ overview.notifications.failed }}</strong>
       <span>Fallidas</span>
     </a>
-    <a routerLink="/superadmin/dashboard" class="platform-overview-card platform-overview-card--muted">
-      <span class="platform-overview-icon"><i class="pi pi-clock" aria-hidden="true"></i></span>
-      <strong>{{ overview.notifications.queued }}</strong>
-      <span>En cola</span>
-    </a>
     <a routerLink="/superadmin/dashboard" class="platform-overview-card">
       <span class="platform-overview-icon"><i class="pi pi-percentage" aria-hidden="true"></i></span>
       <strong>{{ overview.notifications.errorRate }}%</strong>
@@ -88,7 +83,6 @@
           <dl>
             <div><dt>Entregadas</dt><dd>{{ overview.notifications.channels[channel].sent }}</dd></div>
             <div><dt>Fallidas</dt><dd>{{ overview.notifications.channels[channel].failed }}</dd></div>
-            <div><dt>En cola</dt><dd>{{ overview.notifications.channels[channel].queued }}</dd></div>
           </dl>
         </article>
       }

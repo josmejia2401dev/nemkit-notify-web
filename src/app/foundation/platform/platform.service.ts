@@ -99,41 +99,41 @@ export class PlatformService {
   private api = inject(ApiService);
 
   overview(): Observable<ApiResponse<PlatformOverview>> {
-    return this.api.get<PlatformOverview>("/sys/overview");
+    return this.api.get<PlatformOverview>("/foundation/sys/overview");
   }
 
   listUsers(params?: Record<string, unknown>): Observable<PaginatedResponse<PlatformUser>> {
-    return this.api.get<PlatformUser[]>("/sys/users", params) as unknown as Observable<PaginatedResponse<PlatformUser>>;
+    return this.api.get<PlatformUser[]>("/foundation/sys/users", params) as unknown as Observable<PaginatedResponse<PlatformUser>>;
   }
 
   getUser(id: number): Observable<ApiResponse<PlatformUser>> {
-    return this.api.get<PlatformUser>(`/sys/users/${id}`);
+    return this.api.get<PlatformUser>(`/foundation/sys/users/${id}`);
   }
 
   listCompanies(params?: Record<string, unknown>): Observable<PaginatedResponse<PlatformCompany>> {
-    return this.api.get<PlatformCompany[]>("/sys/companies", params) as unknown as Observable<PaginatedResponse<PlatformCompany>>;
+    return this.api.get<PlatformCompany[]>("/foundation/sys/companies", params) as unknown as Observable<PaginatedResponse<PlatformCompany>>;
   }
 
   getCompany(id: number): Observable<ApiResponse<PlatformCompanyDetail>> {
-    return this.api.get<PlatformCompanyDetail>(`/sys/companies/${id}`);
+    return this.api.get<PlatformCompanyDetail>(`/foundation/sys/companies/${id}`);
   }
 
   /** Consumo de mensajes de una empresa por canal y estado. */
   consumption(id: number): Observable<ApiResponse<NotificationSummary>> {
-    return this.api.get<NotificationSummary>(`/sys/companies/${id}/consumption`);
+    return this.api.get<NotificationSummary>(`/foundation/sys/companies/${id}/consumption`);
   }
 
   /** Activa, suspende o bloquea una empresa. */
   changeStatus(id: number, status: CompanyStatus): Observable<ApiResponse<PlatformCompany>> {
-    return this.api.patch<PlatformCompany>(`/sys/companies/${id}/status`, { status });
+    return this.api.patch<PlatformCompany>(`/foundation/sys/companies/${id}/status`, { status });
   }
 
   /** Baja lógica de la empresa (conserva su historial). */
   removeCompany(id: number): Observable<ApiResponse<{ id: number }>> {
-    return this.api.delete<{ id: number }>(`/sys/companies/${id}`);
+    return this.api.delete<{ id: number }>(`/foundation/sys/companies/${id}`);
   }
 
   listEmployees(params?: Record<string, unknown>): Observable<PaginatedResponse<PlatformEmployee>> {
-    return this.api.get<PlatformEmployee[]>("/sys/employees", params) as unknown as Observable<PaginatedResponse<PlatformEmployee>>;
+    return this.api.get<PlatformEmployee[]>("/foundation/sys/employees", params) as unknown as Observable<PaginatedResponse<PlatformEmployee>>;
   }
 }

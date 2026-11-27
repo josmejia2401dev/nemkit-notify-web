@@ -28,19 +28,15 @@ export class NotificationHistoryComponent implements OnInit {
   readonly selected = signal<NotificationRecord | null>(null);
   readonly detailVisible = signal(false);
 
-  channel = "";
   status = "";
   from = "";
   to = "";
   search = "";
 
-  readonly channelOptions = [{ label: "Email", value: "email" }];
-
   readonly statusOptions = [
     { label: "Todos los estados", value: "" },
     { label: "Enviado", value: "sent" },
     { label: "Fallido", value: "failed" },
-    { label: "En cola", value: "queued" },
   ];
 
   ngOnInit(): void {
@@ -53,7 +49,6 @@ export class NotificationHistoryComponent implements OnInit {
       .listNotifications({
         page: this.page(),
         limit: this.pageSize,
-        channel: this.channel || undefined,
         status: this.status || undefined,
         search: this.search.trim() || undefined,
         from: this.from || undefined,
@@ -81,7 +76,6 @@ export class NotificationHistoryComponent implements OnInit {
   }
 
   resetFilters(): void {
-    this.channel = "";
     this.status = "";
     this.from = "";
     this.to = "";
@@ -99,6 +93,6 @@ export class NotificationHistoryComponent implements OnInit {
   }
 
   statusLabel(status: DeliveryStatus): string {
-    return { sent: "Enviado", failed: "Fallido", queued: "En cola" }[status];
+    return { sent: "Enviado", failed: "Fallido" }[status];
   }
 }
