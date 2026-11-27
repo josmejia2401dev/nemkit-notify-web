@@ -3,12 +3,12 @@ import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } 
 import { FormsModule } from "@angular/forms";
 import { DialogModule } from "primeng/dialog";
 import { NotifyService } from "../services/notify.service";
-import { LimitsService } from "../../../core/services/limits.service";
-import { ConfirmService } from "../../../core/services/confirm.service";
-import { NotificationService } from "../../../core/services/notification.service";
+import { LimitsService } from "@nemkit/foundation-web";
+import { ConfirmService } from "@nemkit/foundation-web";
+import { NotificationService } from "@nemkit/foundation-web";
 import { ApiKeyRecord } from "../../../core/models/notify.models";
-import { DEFAULT_PAGE_SIZE, PaginationComponent } from "../../../shared/components/pagination/pagination.component";
-import { PlanLimitBannerComponent } from "../../../shared/components/plan-limit-banner/plan-limit-banner.component";
+import { DEFAULT_PAGE_SIZE, PaginationComponent } from "@nemkit/foundation-web";
+import { PlanLimitBannerComponent } from "@nemkit/foundation-web";
 
 @Component({
   selector: "app-api-key-list",

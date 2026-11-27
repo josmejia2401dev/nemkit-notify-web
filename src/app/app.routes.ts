@@ -1,11 +1,14 @@
 import { Routes } from "@angular/router";
-import { foundationAuthRoutes } from "./foundation/auth/auth.routes";
-import { rootRedirectGuard } from "./core/guards/root-redirect.guard";
-import { platformRoutes } from "./foundation/platform/platform.routes";
+import {
+  createFoundationAuthRoutes,
+  FOUNDATION_PRODUCT_PRESETS,
+  platformRoutes,
+  rootRedirectGuard,
+} from "@nemkit/foundation-web";
 import { companyRoutes } from "./modules/roles/company/company.routes";
 
 export const routes: Routes = [
-  ...foundationAuthRoutes,
+  ...createFoundationAuthRoutes(FOUNDATION_PRODUCT_PRESETS.notify),
   ...platformRoutes,
   ...companyRoutes,
   { path: "", canActivate: [rootRedirectGuard], children: [] },

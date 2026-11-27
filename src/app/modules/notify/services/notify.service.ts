@@ -1,6 +1,6 @@
 import { Injectable, inject } from "@angular/core";
 import { Observable } from "rxjs";
-import { ApiService, ApiResponse } from "../../../core/services/api.service";
+import { ApiService, ApiResponse } from "@nemkit/foundation-web";
 import {
   ApiKeyRecord,
   Channel,

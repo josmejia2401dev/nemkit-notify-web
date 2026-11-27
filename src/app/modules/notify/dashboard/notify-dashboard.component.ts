@@ -5,9 +5,9 @@ import { ChartModule } from "primeng/chart";
 import { SelectButtonModule } from "primeng/selectbutton";
 import { FormsModule } from "@angular/forms";
 import { NotifyService } from "../services/notify.service";
-import { LimitsService } from "../../../core/services/limits.service";
+import { LimitsService } from "@nemkit/foundation-web";
 import { Channel, NotificationSummary, TimePoint } from "../../../core/models/notify.models";
-import { PlanLimitBannerComponent } from "../../../shared/components/plan-limit-banner/plan-limit-banner.component";
+import { PlanLimitBannerComponent } from "@nemkit/foundation-web";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 

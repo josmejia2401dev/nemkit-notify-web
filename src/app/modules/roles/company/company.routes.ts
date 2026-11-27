@@ -1,8 +1,8 @@
 import { Routes } from "@angular/router";
 import { CompanyShellComponent } from "./shell/company-shell.component";
-import { roleGuard } from "../../../core/guards/role.guard";
-import { foundationProfileRoutes } from "../../../foundation/profile/profile.routes";
-import { foundationFeedbackRoutes } from "../../../foundation/feedback/feedback.routes";
+import { roleGuard } from "@nemkit/foundation-web";
+import { foundationProfileRoutes } from "@nemkit/foundation-web";
+import { foundationFeedbackRoutes } from "@nemkit/foundation-web";
 
 /** Portal de la empresa: historial, API Keys, estadísticas y ajustes. */
 export const companyRoutes: Routes = [

@@ -2,9 +2,9 @@ import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { NotifyService } from "../services/notify.service";
-import { LimitsService } from "../../../core/services/limits.service";
-import { AuthStore } from "../../../core/store/auth.store";
-import { PlanLimitBannerComponent } from "../../../shared/components/plan-limit-banner/plan-limit-banner.component";
+import { LimitsService } from "@nemkit/foundation-web";
+import { AuthStore } from "@nemkit/foundation-web";
+import { PlanLimitBannerComponent } from "@nemkit/foundation-web";
 
 @Component({
   selector: "app-notify-settings",

@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import {
   AppNavItem,
   ApplicationShellComponent,
-} from "../../../../foundation/layout/application-shell.component";
+} from "@nemkit/foundation-web";
 
 /** Shell del portal de empresa. Menú propio de notificaciones. */
 @Component({
